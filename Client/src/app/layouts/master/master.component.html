@@ -1,0 +1,25 @@
+<header class="row">
+  <div class="logo col">Web Store</div>
+  <nav class="row col">
+    <li class="col">
+      <a routerLink="home">Home</a>
+    </li>
+    <li class="col">
+      <a routerLink="shop">Shop</a>
+    </li>
+    <li class="col">
+      <a routerLink="admin">Admin</a>
+    </li>
+  </nav>
+  <span class="col">
+    hi guest
+  </span>
+</header>
+<hr />
+<main class="row">
+  <section class="col">sidebar - A</section>
+  <section class="col"><router-outlet></router-outlet></section>
+  <section class="col">sidebar - A</section>
+</main>
+<hr />
+<app-footer></app-footer>
