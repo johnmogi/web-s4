@@ -1,6 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+import { HttpClientModule } from "@angular/common/http";
+import { FormsModule } from "@angular/forms";
+
 import { AppRoutingModule } from './app-routing.module';
 import { MasterComponent } from './layouts/master/master.component';
 import { FooterComponent } from './layouts/footer/footer.component';
@@ -26,7 +29,9 @@ import { EditComponent } from './components/pages/auth/admin/edit/edit.component
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [MasterComponent]
