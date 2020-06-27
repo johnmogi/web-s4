@@ -14,6 +14,8 @@ import { RegisterComponent } from './components/pages/auth/register/register.com
 import { AdminComponent } from './components/pages/auth/admin/admin.component';
 import { AddProductComponent } from './components/pages/auth/admin/add-product/add-product.component';
 import { EditComponent } from './components/pages/auth/admin/edit/edit.component';
+import { CartComponent } from './components/retail/cart/cart.component';
+import { OrderComponent } from './components/retail/order/order.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { EditComponent } from './components/pages/auth/admin/edit/edit.component
     RegisterComponent,
     AdminComponent,
     AddProductComponent,
-    EditComponent
+    EditComponent,
+    CartComponent,
+    OrderComponent
   ],
   imports: [
     BrowserModule,

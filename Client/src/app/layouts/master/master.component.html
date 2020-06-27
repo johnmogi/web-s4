@@ -4,24 +4,46 @@
     <li class="col">
       <a routerLink="home">Home</a>
     </li>
-    <li class="col">
+    <li class="col" *ngIf="!user">
+      <a routerLink="register">Register</a>
+    </li>
+    <li class="col" *ngIf="user">
       <a routerLink="shop">Shop</a>
     </li>
-    <li class="col">
+    <li class="col" *ngIf="user">
       <a routerLink="admin">Admin</a>
     </li>
   </nav>
-  <span class="col">
-    hi guest
-  </span>
+  <li class="col">
+    <span
+      ><a href="mailto:info@kodo.press">info@kodo.press</a> |
+      <a href="tel:050-9382456">050-9382456</a> |
+    </span>
+  </li>
+  <li class="col">
+    {{ user ? user.firstName : " Guest" }}
+  </li>
 </header>
 <hr />
 <main class="row">
   <section class="col">
-      login
+    <button
+      type="button"
+      (click)="logout()"
+      class="btn btn-outline-danger"
+      *ngIf="user"
+    >
+      Logout
+    </button>
+
+    <app-login *ngIf="!user"></app-login>
+    <br>
+    <app-cart *ngIf="user"></app-cart>
   </section>
   <section class="col"><router-outlet></router-outlet></section>
-  <section class="col">[there are {{products.length}} items at our store]</section>
+  <section class="col">
+    [there are {{ products.length }} items at our store]
+  </section>
 </main>
 <hr />
 <app-footer></app-footer>
