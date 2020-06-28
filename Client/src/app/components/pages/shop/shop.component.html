@@ -3,10 +3,10 @@
     <br> {{ p.catID }} {{ p.itemDescription }} 
     <form class="row" novalidate>
  
-      <input type="number" ng-model="amount" name="amount" value="1" #amountInput='ngModel' [(ngModel)]='addItem.amount' required
+      <input type="number" ng-model="amount" name="amount" value="1"  [(ngModel)]='addItem.amount' required
       pattern="/^[0-9]*$/" >
 
-        <button type="button" class="col" value="Add" (click)="addToCart(p.productID, amount)">
+        <button type="button" class="col" value="Add" (click)="addToCart(p.productID)">
           add_shopping_cart Add To Cart </button>
         </form>
       </div> 

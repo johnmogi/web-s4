@@ -94,6 +94,7 @@ export class MasterComponent implements OnInit {
 
         if (res.length > 0) {
           // console.table('cart: i have a cart', res);
+          // send cartitems into store
           this.cartService.fetchItems(res[0].cartID).subscribe((response) => {
             //    console.table('push these items into store:', response);
             const action = { type: ActionType.getCartItems, payload: response };
