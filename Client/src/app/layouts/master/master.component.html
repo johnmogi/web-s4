@@ -26,7 +26,7 @@
 </header>
 <hr />
 <main class="row">
-  <section class="col">
+  <section class="col-1">
     <button
       type="button"
       (click)="logout()"
@@ -36,12 +36,13 @@
       Logout
     </button>
 
-    <app-login *ngIf="!user"></app-login>
+    <app-login *ngIf="!user" class="card"></app-login>
     <br>
-    <app-cart *ngIf="user"></app-cart>
+    <app-cart *ngIf="user" class="card"></app-cart>
+    <br>
   </section>
-  <section class="col"><router-outlet></router-outlet></section>
-  <section class="col">
+  <section class="col card"><router-outlet></router-outlet></section>
+  <section class="col-1">
     [there are {{ products.length }} items at our store]
   </section>
 </main>

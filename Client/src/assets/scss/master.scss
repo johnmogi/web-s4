@@ -1,0 +1,23 @@
+.row{
+    display:flex;
+}
+.col{
+    flex :1;
+}
+.col-1{
+    min-width:22%;
+    max-width:22%;
+    background-color: lightsalmon;
+}
+.col-4{
+    display: block;
+    margin: 1px;
+    float: left;
+    min-height: 230px;
+    max-width: 32%;
+    background-color: lightgray;
+    border: 1px solid #000;
+}
+.card{
+    border: 1px solid #000;
+}

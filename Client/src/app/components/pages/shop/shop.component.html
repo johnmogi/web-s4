@@ -1,1 +1,24 @@
-<p>shop works!</p>
+
+<div class="row grid">
+
+    <div class="card col-4" *ngFor="let p of activeProducts">
+        {{ p.itemName }}
+        <br>  
+        <br>
+        {{ p.catID }}
+        {{ p.itemDescription }}
+    
+    <form class="row" novalidate  >
+        <input class="col" type="number" id ="amount-{{p.productID}}" min = "1" step = "1" value="1"  name="amount-{{p.productID}}"  [(ngModel)]='addItem' required>
+        <input  type="hidden" id ="(p.productID)"   name="(p.productID)"  [(ngModel)]='addItem.productID' >
+
+        <!-- <input class="col" type = "number" min = "1" step = "any" name="amount" id="amount" ngModel="addItem.amount"> -->
+        <button
+        type="button"
+          class="col"
+           value = "Add" (click)="addToCart(p.productID)">  add_shopping_cart
+          Add To Cart
+        </button>
+</form>
+
+</div>

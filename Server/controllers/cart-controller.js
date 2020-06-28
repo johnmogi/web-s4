@@ -16,7 +16,7 @@ router.get('/user/:id', async (request, response) => {
 });
 
 // POST  localhost:3000/api/cart
-router.post('/', async (request, response) => {
+router.post('/:userID', async (request, response) => {
     const time = new Date();
     const year = time.getFullYear();
     const month = time.getMonth() + 1;
@@ -25,10 +25,11 @@ router.post('/', async (request, response) => {
     const minutes = time.getMinutes();
     const seconds = time.getSeconds();
     const nowTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-
+const userID = +request.params.userID
     try {
         const cart = request.body;
         cart.cartTime = nowTime;
+        cart.userID = userID;
         // cart.userId = request.body;
         const newCart = await cartLogic.addCart(cart);
         console.log(newCart)

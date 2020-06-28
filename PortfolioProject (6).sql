@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 26, 2020 at 02:15 PM
+-- Generation Time: Jun 28, 2020 at 06:55 AM
 -- Server version: 10.4.12-MariaDB
 -- PHP Version: 7.4.6
 
@@ -40,7 +40,8 @@ CREATE TABLE `cart` (
 --
 
 INSERT INTO `cart` (`cartID`, `userID`, `cartTime`) VALUES
-(1, 24, '2020-05-30 19:56:34.000000');
+(1, 24, '2020-05-30 19:56:34.000000'),
+(4, 22, '2020-06-28 08:49:48.000000');
 
 -- --------------------------------------------------------
 
@@ -237,7 +238,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `cartID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `cartID` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `cartItem`

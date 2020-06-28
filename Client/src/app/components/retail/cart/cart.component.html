@@ -1,1 +1,16 @@
-<p>cart works!</p>
+<h4 *ngIf="cartBox">{{cartBox}}</h4>
+<!-- <h6 *ngIf="usercart.length =0">your shopping cart is empty... go ahead and load some items...</h6> -->
+<table>
+    <thead>
+        <td>#</td>
+        <td>quantity</td>
+        <td>total</td>
+    </thead>
+    <tbody>
+        <tr *ngFor="let c of userCart">
+<td>{{c.productID}}</td>
+<td>{{c.amount}}</td>
+    <td>{{c.totalPrice}}</td>
+        </tr>
+    </tbody>
+</table>

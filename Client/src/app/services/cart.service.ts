@@ -14,6 +14,10 @@ const port = 3000;
 export class CartService {
   constructor(private http: HttpClient) {}
 
+  public makeCart(userID:Number): Observable<CartModel[]> {
+    return this.http.post<CartModel[]>(`http://localhost:${port}/api/cart/${userID}`, "")
+  }  
+
   public findCart(id:Number): Observable<CartModel[]> {
     return this.http.get<CartModel[]>(`http://localhost:${port}/api/cart/user/${id}`)
   }  
