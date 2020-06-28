@@ -50,12 +50,14 @@ router.get('/history/:cartID', async (request, response) => {
 });
 
 
-router.post('/add-item', async (request, response) => {
-    const cartID =request.body.cartID
-    const productID =request.body.productID
-    const amount =request.body.amount
+router.post('/add-item/:cartID', async (request, response) => {
 
+    console.log(request.body.cartID)
+    const cartID = +request.params.cartID
+    const productID = +request.body.productID
+    const amount = +request.body.amount
 
+console.log(cartID, productID, amount)
     try {
         const addItem = await cartLogic.AddItemToCart(cartID, productID, amount );
         response.json(addItem);

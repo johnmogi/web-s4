@@ -19,7 +19,7 @@ export class ShopComponent implements OnInit {
 
   public activeProducts = [];
 
-  public addItem = { amount: '', productID: '' };
+  public addItem = { amount: '', productID: '', cartId : 0 };
   total = 0;
 
   constructor(private cartService: CartService) {}
@@ -57,11 +57,15 @@ export class ShopComponent implements OnInit {
   }
 
   public addToCart(id) {
-    console.table(this.getCart[0].cartID, id, this.addItem.amount)
-    // this.cartService
-    //   .addItemToCart(this.cart.cartID, id, this.addItem.amount)
-    //   .subscribe((res) => console.log(res));
+     this.addItem.cartId = +this.getCart[0].cartID 
+     this.addItem.productID = id;
 
-    // console.table(id, this.addItem.amount);
+//     // addItem = { amount: '', productID: '', cartId : '' };
+// console.log(this.addItem)
+//    console.table(this.getCart[0].cartID, id, this.addItem.amount)
+    this.cartService
+      .addItemToCart(this.addItem, this.addItem.cartId)
+      .subscribe((res) => console.log(res));
+
   }
 }

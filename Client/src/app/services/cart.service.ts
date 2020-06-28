@@ -25,8 +25,9 @@ export class CartService {
     return this.http.get<CartItemModel[]>(`http://localhost:${port}/api/cart/history/${num}`)
   } 
 // add item to cart
-public addItemToCart(productID, cartID, amount): Observable<CartItemModel[]> {
-  return this.http.post<CartItemModel[]>(`http://localhost:${port}/api/cart/add-item`, {cart: cartID , product: productID, amount : amount})
+public addItemToCart(sendInfo, cartID): Observable<CartItemModel[]> {
+console.table("service", sendInfo)
+  return this.http.post<CartItemModel[]>(`http://localhost:${port}/api/cart/add-item/${cartID}`, sendInfo)
 } 
 public removeItemFromCart(productID, cartID): Observable<CartItemModel[]> {
   return this.http.delete<CartItemModel[]>(`http://localhost:${port}/api/cart/drop/${cartID}/${productID}`)
