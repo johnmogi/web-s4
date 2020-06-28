@@ -6,7 +6,6 @@ import { AuthModel } from 'src/app/models/Auth-model';
 import { CartItemModel } from 'src/app/models/Cart-Item-model';
 import { store } from 'src/app/redux/store';
 
-
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -25,22 +24,23 @@ export class CartComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-
     store.subscribe(() => {
       this.userCart = store.getState().cartItems;
-
     });
     this.userCart = store.getState().cartItems;
-    if(this.userCart.length<1){
+    if (this.userCart.length < 1) {
       this.userCart = [];
 
-      this.cartBox = "Start filling up your cart by adding items..."
+      this.cartBox = 'Start filling up your cart by adding items...';
     }
-    if(this.userCart.length>0){
-      this.cartBox = "you left an un-saved cart... here are your previous items"
-    
+    if (this.userCart.length > 0) {
+      this.cartBox =
+        'you left an un-saved cart... here are your previous items';
     }
-
   }
-  
+  public removeItem(id) {
+    this.cartService
+      .removeItemFromCart(id, this.userCart[0].cartID)
+      .subscribe((res) => console.log(res));
+  }
 }

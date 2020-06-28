@@ -5,12 +5,16 @@
         <td>#</td>
         <td>quantity</td>
         <td>total</td>
+        <td>remove</td>
     </thead>
     <tbody>
         <tr *ngFor="let c of userCart">
 <td>{{c.productID}}</td>
 <td>{{c.amount}}</td>
     <td>{{c.totalPrice}}</td>
+    <td><a (click)=removeItem(c.productID)>X</a></td>
         </tr>
     </tbody>
 </table>
+
+<button type="button" routerLink="checkout">Checkout</button>

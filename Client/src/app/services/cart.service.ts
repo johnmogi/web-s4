@@ -15,7 +15,7 @@ export class CartService {
   constructor(private http: HttpClient) {}
 
   public makeCart(userID:Number): Observable<CartModel[]> {
-    return this.http.post<CartModel[]>(`http://localhost:${port}/api/cart/${userID}`, "")
+    return this.http.post<CartModel[]>(`http://localhost:${port}/api/cart/new/${userID}`, "")
   }  
 
   public findCart(id:Number): Observable<CartModel[]> {
@@ -25,8 +25,10 @@ export class CartService {
     return this.http.get<CartItemModel[]>(`http://localhost:${port}/api/cart/history/${num}`)
   } 
 // add item to cart
-public addItemToCart(num): Observable<CartItemModel[]> {
-  return this.http.get<CartItemModel[]>(`http://localhost:${port}/api/cart/history/${num}`)
+public addItemToCart(productID, cartID, amount): Observable<CartItemModel[]> {
+  return this.http.post<CartItemModel[]>(`http://localhost:${port}/api/cart/add-item`, {cart: cartID , product: productID, amount : amount})
 } 
-
+public removeItemFromCart(productID, cartID): Observable<CartItemModel[]> {
+  return this.http.delete<CartItemModel[]>(`http://localhost:${port}/api/cart/drop/${cartID}/${productID}`)
+} 
 }

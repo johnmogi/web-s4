@@ -1,12 +1,12 @@
-<app-item *ngFor="let p of activeProducts"></app-item>
-<!-- <div class="row grid">
+ <div class="row grid">
   <div class="card col-4" *ngFor="let p of activeProducts"> {{ p.itemName }} <br>
-    <br> {{ p.catID }} {{ p.itemDescription }} <form class="row" novalidate>
-      <input class="col" type="number" id="amount-{{p.productID}}" min="1" step="1" name="amount-{{p.productID}}"
-        required>
-        <button type="button" class="col" value="Add" (click)="addToCart(p.productID, amount-p.productID.value)">
+    <br> {{ p.catID }} {{ p.itemDescription }} 
+    <form class="row" novalidate>
+ 
+      <input type="number" ng-model="amount" name="amount" value="1" #amountInput='ngModel' [(ngModel)]='addItem.amount' required
+      pattern="/^[0-9]*$/" >
+
+        <button type="button" class="col" value="Add" (click)="addToCart(p.productID, amount)">
           add_shopping_cart Add To Cart </button>
         </form>
-      </div> -->
-<!-- <input type="hidden" id="(p.productID)" name="(p.productID)" [(ngModel)]='addItem.productID'> -->
-<!-- <input class="col" type = "number" min = "1" step = "any" name="amount" id="amount" ngModel="addItem.amount"> -->
+      </div> 

@@ -33,23 +33,39 @@ async function verifyDuplicate(product) {
 }
 // INSERT INTO `cartItem` (`itemID`, `productID`, `amount`, `totalPrice`, `cartID`) VALUES (NULL, '4', '1', '2500', '1');
 
-async function addProductToCartItem(cart) {
-    const sql = `INSERT INTO cartItem VALUES (DEFAULT, ?, ?, ?, ?)`;
-    const newCart = await dal.executeAsync(sql, [cart.productID, cart.amount, cart.totalPrice, cart.cartID]);
+// INSERT INTO `cartItem` (productID, amount, totalPrice, cartID) VALUES (NULL, '23', '1', '250', '4');
+
+async function AddItemToCart(cartID, productID, amount) {
+    console.log(cartID, productID)
+
+    const findPrice = `SELECT price FROM products WHERE productID = ${productID}`;
+    const resPrice = await dal.executeAsync(findPrice);
+
+    const newAmount = amount
+    const newPrice =resPrice[0].price
+    // amount * price
+    // get item price from amount --> get item original price:
+
+
+    const sql = `INSERT INTO cartItem (productID, amount, totalPrice, cartID) VALUES ( ${productID}, ${newAmount}, ${newPrice}, ${cartID} )`;
+    const newCart = await dal.executeAsync(sql);
+    // const sql = `INSERT INTO cartItem VALUES (DEFAULT, ?, 0, 0, ?)`;
+    // const newCart = await dal.executeAsync(sql, [productID, 0,  0, cartID ]);
     return newCart;
 }
+
+async function deleteItemFromCart(cartID, productID) {
+    const sql = `DELETE FROM cartItem WHERE cartID = ${cartID} AND productID = ${productID}`;
+    const newCart = await dal.executeAsync(sql);
+    return newCart;
+}
+
+
 async function deleteCart(cart) {
     const sql = `DELETE FROM cartItem WHERE cartID = ${cart.cartID}`;
     const newCart = await dal.executeAsync(sql);
     return newCart;
 }
-async function deleteItemFromCart(id) {
-    const sql = `DELETE FROM cartItem WHERE productID = ${id}`;
-    const newCart = await dal.executeAsync(sql);
-    return newCart;
-}
-
-
 
 
 module.exports = {
@@ -57,7 +73,7 @@ module.exports = {
     getUserCart,
     historyCart,
     verifyDuplicate,
-    addProductToCartItem,
     deleteCart,
+    AddItemToCart,
     deleteItemFromCart
 }

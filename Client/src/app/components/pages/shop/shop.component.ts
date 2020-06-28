@@ -5,8 +5,7 @@ import { ProductModel } from 'src/app/models/Products-model';
 @Component({
   selector: 'app-shop',
   templateUrl: './shop.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class ShopComponent implements OnInit {
   public products: ProductModel[] = [];
@@ -14,30 +13,37 @@ export class ShopComponent implements OnInit {
 
   public activeProducts = [];
 
-  public addItem = { amount: 0, productID: '' };
+  public addItem = { amount: '', productID: '' };
+  total =0 ;
 
   @Input()
   public amount: 0;
 
-
   ngOnInit() {
     store.subscribe(() => {
       this.products = store.getState().products;
-      this.activeProducts = this.products
-
-
+      this.activeProducts = this.products;
     });
+
     this.products = store.getState().products;
-    this.activeProducts = this.products
+    this.activeProducts = this.products;
 
-    console.table("shop", this.activeProducts)
-
+    // console.table("shop", this.activeProducts)
   }
-
-  public addToCart(id, amount) {
-    alert(+amount)
-    this.addItem.amount = +amount;
-    this.addItem.productID = id
-    console.log(this.addItem)
+  public addToCart(id, amount){
+    console.table(id,amount)
   }
+  increase() {
+    console.log(this.total)
+    this.total+1
+    // this.cartService.updateCartItems(this.total+1);
+}
+
+decrease() {
+  console.log(this.total)
+  this.total-1
+    // this.cartService.updateCartItems(this.total-1);
+}
+
+
 }

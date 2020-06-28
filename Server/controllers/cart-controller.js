@@ -16,7 +16,7 @@ router.get('/user/:id', async (request, response) => {
 });
 
 // POST  localhost:3000/api/cart
-router.post('/:userID', async (request, response) => {
+router.post('/new/:userID', async (request, response) => {
     const time = new Date();
     const year = time.getFullYear();
     const month = time.getMonth() + 1;
@@ -48,6 +48,24 @@ router.get('/history/:cartID', async (request, response) => {
         sendError(response, error);
     }
 });
+
+
+router.post('/add-item', async (request, response) => {
+    const cartID =request.body.cartID
+    const productID =request.body.productID
+    const amount =request.body.amount
+
+
+    try {
+        const addItem = await cartLogic.AddItemToCart(cartID, productID, amount );
+        response.json(addItem);
+    } catch (error) {
+        sendError(response, error);
+    }
+});
+
+
+
 router.delete('/drop', async (request, response) => {
     try {
         const cart = request.body;
@@ -57,11 +75,13 @@ router.delete('/drop', async (request, response) => {
         sendError(response, error);
     }
 });
-router.delete('/drop/:id', async (request, response) => {
-    try {
-        const id = +request.params.id;
+router.delete('/drop/:cartID/:productID', async (request, response) => {
+    const cartID = +request.params.cartID;
+    const productID = +request.params.productID;
 
-    await cartLogic.deleteItemFromCart(id);
+    try {
+
+    await cartLogic.deleteItemFromCart(cartID, productID );
     response.sendStatus(204);
     } catch (error) {
         sendError(response, error);
