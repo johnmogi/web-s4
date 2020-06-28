@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { store } from 'src/app/redux/store';
 import { ProductModel } from 'src/app/models/Products-model';
 
@@ -11,9 +11,13 @@ import { ProductModel } from 'src/app/models/Products-model';
 export class ShopComponent implements OnInit {
   public products: ProductModel[] = [];
   public product: ProductModel = new ProductModel();
- 
+
   public activeProducts = [];
-  public addItem= {amount: '', productID :''};
+
+  public addItem = { amount: 0, productID: '' };
+
+  @Input()
+  public amount: 0;
 
 
   ngOnInit() {
@@ -21,17 +25,19 @@ export class ShopComponent implements OnInit {
       this.products = store.getState().products;
       this.activeProducts = this.products
 
-      
+
     });
     this.products = store.getState().products;
     this.activeProducts = this.products
 
-      console.table("shop", this.activeProducts)
+    console.table("shop", this.activeProducts)
 
   }
-  
-  public addToCart(id){
-    alert(id)
+
+  public addToCart(id, amount) {
+    alert(+amount)
+    this.addItem.amount = +amount;
+    this.addItem.productID = id
     console.log(this.addItem)
   }
 }
