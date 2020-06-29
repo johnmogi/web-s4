@@ -57,10 +57,11 @@
     <br />
     <section class="yellow-notices">
       <div class="right-cart" *ngIf="userCart && user && !isAdmin" class="card">
-        <h6>
-          you have an open cart:
-        </h6>
-
+        <h4>
+          you have an open cart from- {{cartDate}}
+        </h4>
+        <br />
+        <h5>SubTotal : {{ totalPrice }}</h5>
       </div>
     </section>
   </section>

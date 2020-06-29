@@ -27,7 +27,9 @@ export class MasterComponent implements OnInit {
   public stopCartLoop: Boolean = false;
   // store usage
   public user = new AuthModel();
-  public isAdmin = this.user.isAdmin
+  public isAdmin = this.user.isAdmin;
+  public cartDate: '';
+  public totalPrice = 0;
 
   constructor(
     private itemService: ShopService,
@@ -35,12 +37,12 @@ export class MasterComponent implements OnInit {
     private orderService: OrderService,
 
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit() {
     store.subscribe(() => {
       this.products = store.getState().products; //* -products ready
-      this.user = store.getState().user;//* -user ready - get cart:
+      this.user = store.getState().user; //* -user ready - get cart:
 
       if (this.user && !this.user.isAdmin) {
         this.fetchCart(+this.user.userID);
@@ -48,10 +50,10 @@ export class MasterComponent implements OnInit {
       this.cartHolder = store.getState().cart;
 
       this.orders = store.getState().orders;
-
     }); //store subscribe
-    
-    this.itemService.getAllProducts().subscribe( // fetch products
+
+    this.itemService.getAllProducts().subscribe(
+      // fetch products
       (res) => {
         const action = { type: ActionType.getProducts, payload: res };
         store.dispatch(action);
@@ -61,9 +63,8 @@ export class MasterComponent implements OnInit {
     );
 
     this.products = store.getState().products;
-    this.user = store.getState().user; 
+    this.user = store.getState().user;
     this.cartHolder = store.getState().cart;
-
     // ------
     this.orderService.getAllorders().subscribe(
       (res) => {
@@ -84,8 +85,8 @@ export class MasterComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
-  
-  public async fetchCart(id: Number) { // fetch cart + items into store:
+  public async fetchCart(id: Number) {
+    // fetch cart + items into store:
     this.cartService.findCart(id).subscribe(
       (res) => {
         // stopping loop (created by subscribing to an ongoing event)...
@@ -97,7 +98,8 @@ export class MasterComponent implements OnInit {
         }
         if (res.length < 1 && !this.user.isAdmin) {
           this.cartService.makeCart(id).subscribe(
-            () => {
+            (newCart) => {
+              this.revealCart(newCart[0]);
               return;
             },
             (err) => alert(err.message)
@@ -105,6 +107,9 @@ export class MasterComponent implements OnInit {
         }
 
         if (res.length > 0) {
+          this.cartTime(res[0].cartTime);
+          // console.table("cartDate:", res[0].cartTime)
+
           // console.table('cart: i have a cart', res);
           // send cartitems into store
           this.cartService.fetchItems(res[0].cartID).subscribe((response) => {
@@ -112,12 +117,27 @@ export class MasterComponent implements OnInit {
             const action = { type: ActionType.getCartItems, payload: response };
             store.dispatch(action);
             this.userCart = response;
-            console.table('cart?', this.userCart);
-
+            this.sumTotalPrice(this.userCart);
           });
         }
       },
       (err) => alert(err.message)
     );
+  }
+  public sumTotalPrice(cart) {
+    //  console.table('cart?', cart);
+    let sum = 0;
+    for (let i = 0; i < cart.length; i++) {
+      sum += cart[i].totalPrice;
+    }
+    //console.log(sum);
+    this.totalPrice = sum;
+  }
+  public revealCart(newCart) {
+    console.table('newCart:', newCart);
+  }
+  public cartTime(cart) {
+    this.cartDate = cart;
+    // console.table("newCart:", newCart)
   }
 }

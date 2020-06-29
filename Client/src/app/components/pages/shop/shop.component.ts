@@ -15,8 +15,13 @@ import { Router } from '@angular/router';
 export class ShopComponent implements OnInit {
   public products: ProductModel[] = [];
   public product: ProductModel = new ProductModel();
+
+  public cart: CartModel[] = []; //try to init cart here before add to cart....
+  public newCart: CartModel = new CartModel();
+
   public getCart: CartItemModel[] = [];
-  public cart: CartItemModel = new CartItemModel();
+
+  public makeCart = [];
   public user = new AuthModel(); // kick out un-logged users
   public activeProducts = [];
   public addItem = { amount: '', productID: '', cartId: 0 };
@@ -27,21 +32,26 @@ export class ShopComponent implements OnInit {
     store.subscribe(() => {
       this.products = store.getState().products;
       this.getCart = store.getState().cartItems;
+      this.cart = store.getState().cart;
+
       this.activeProducts = this.products;
       this.user = store.getState().user;
-     // console.table('user?', this.user);
-      if ((this.user === null)) {
+      // console.table('user?', this.user);
+      if (this.user === null) {
         this.router.navigateByUrl('/');
       }
     });
 
     this.products = store.getState().products;
     this.getCart = store.getState().cartItems;
+    this.cart = store.getState().cart;
+    console.table('cart:', this.cart);
 
     this.activeProducts = this.products;
   }
 
   public addToCart(id) {
+    //is the usercart loaded?
     this.addItem.cartId = +this.getCart[0].cartID;
     this.addItem.productID = id;
 
