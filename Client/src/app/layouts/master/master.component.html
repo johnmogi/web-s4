@@ -15,23 +15,55 @@
     </li>
   </nav>
   <li class="col">
-    <span><a href="mailto:info@kodo.press">info@kodo.press</a> | <a href="tel:050-9382456">050-9382456</a> | </span>
+    <span
+      ><a href="mailto:info@kodo.press">info@kodo.press</a> |
+      <a href="tel:050-9382456">050-9382456</a> |
+    </span>
   </li>
-  <li class="col"> {{ user ? user.firstName : " Guest" }} </li>
+  <li class="col">{{ user ? user.firstName : " Guest" }}</li>
 </header>
 <hr />
 <main class="row">
   <section class="col-1">
-    <button type="button" (click)="logout()" class="btn btn-outline-danger" *ngIf="user"> Logout </button>
+    <button
+      type="button"
+      routerLink="shop"
+      class="btn btn-outline-success"
+      *ngIf="user"
+    >
+      Start Shopping
+    </button>
+
+    <button
+      type="button"
+      (click)="logout()"
+      class="btn btn-outline-danger"
+      *ngIf="user"
+    >
+      Logout
+    </button>
     <app-login *ngIf="!user" class="card"></app-login>
-    <br>
+    <br />
     <app-cart *ngIf="user && !isAdmin" class="card"></app-cart>
-    <br>
+    <br />
   </section>
   <section class="col card">
     <router-outlet></router-outlet>
   </section>
-  <section class="col-1"> [there are {{ products.length }} items at our store] </section>
+  <section class="col-1">
+    [there are {{ products.length }} items at our store]
+    <br />
+    [there were {{ orders.length }} orders at our store]
+    <br />
+    <section class="yellow-notices">
+      <div class="right-cart" *ngIf="userCart && user && !isAdmin" class="card">
+        <h6>
+          you have an open cart:
+        </h6>
+
+      </div>
+    </section>
+  </section>
 </main>
 <hr />
 <app-footer></app-footer>

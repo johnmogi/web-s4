@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 import { CartModel } from 'src/app/models/Cart-model';
 import { CartService } from 'src/app/services/cart.service';
 import { CartItemModel } from 'src/app/models/Cart-Item-model';
+import { OrderModel } from 'src/app/models/Order-model';
+import { OrderService } from 'src/app/services/order.service';
 
 @Component({
   selector: 'app-master',
@@ -15,10 +17,11 @@ import { CartItemModel } from 'src/app/models/Cart-Item-model';
   styleUrls: ['./master.component.css'],
 })
 export class MasterComponent implements OnInit {
-  // ONE STORE TO RULE THEM ALL - initiator:
+  // ONE STORE TO RULE THEM ALL:
   public products: ProductModel[] = [];
-  //store cart if there is a cart- if there's not- create a cart and place it in store
   public cartHolder: CartModel[] = [];
+  public orders: OrderModel[] = [];
+
   public userCart = [];
   public cartItems = new CartItemModel();
   public stopCartLoop: Boolean = false;
@@ -29,23 +32,26 @@ export class MasterComponent implements OnInit {
   constructor(
     private itemService: ShopService,
     private cartService: CartService,
+    private orderService: OrderService,
+
     private router: Router
   ) { }
 
   ngOnInit() {
     store.subscribe(() => {
-      this.products = store.getState().products;
-      //* -products ready
-      this.user = store.getState().user;
-      //* -user ready
+      this.products = store.getState().products; //* -products ready
+      this.user = store.getState().user;//* -user ready - get cart:
+
       if (this.user && !this.user.isAdmin) {
         this.fetchCart(+this.user.userID);
       }
-
       this.cartHolder = store.getState().cart;
+
+      this.orders = store.getState().orders;
+
     }); //store subscribe
-    // fetch products
-    this.itemService.getAllProducts().subscribe(
+    
+    this.itemService.getAllProducts().subscribe( // fetch products
       (res) => {
         const action = { type: ActionType.getProducts, payload: res };
         store.dispatch(action);
@@ -55,8 +61,20 @@ export class MasterComponent implements OnInit {
     );
 
     this.products = store.getState().products;
-    // fetch user:
-    this.user = store.getState().user;
+    this.user = store.getState().user; 
+    this.cartHolder = store.getState().cart;
+
+    // ------
+    this.orderService.getAllorders().subscribe(
+      (res) => {
+        const action = { type: ActionType.getOrders, payload: res };
+        store.dispatch(action);
+        this.orders = res;
+      },
+      (err) => alert(err.message)
+    );
+
+    this.orders = store.getState().orders;
   } // ngonint
 
   public logout(): void {
@@ -66,15 +84,11 @@ export class MasterComponent implements OnInit {
     this.router.navigateByUrl('/');
   }
 
-  // store does not load user ):
-  public async fetchCart(id: Number) {
-    // console.log(id); //24
-    // stop loop?
-
+  
+  public async fetchCart(id: Number) { // fetch cart + items into store:
     this.cartService.findCart(id).subscribe(
       (res) => {
         // stopping loop (created by subscribing to an ongoing event)...
-
         if (this.stopCartLoop === true) {
           return;
         }
@@ -82,8 +96,6 @@ export class MasterComponent implements OnInit {
           this.stopCartLoop = true;
         }
         if (res.length < 1 && !this.user.isAdmin) {
-
-
           this.cartService.makeCart(id).subscribe(
             () => {
               return;
@@ -100,6 +112,8 @@ export class MasterComponent implements OnInit {
             const action = { type: ActionType.getCartItems, payload: response };
             store.dispatch(action);
             this.userCart = response;
+            console.table('cart?', this.userCart);
+
           });
         }
       },

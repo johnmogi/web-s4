@@ -16,7 +16,7 @@ export class ItemComponent implements OnInit {
   ngOnInit() {
     store.subscribe(() => {
       this.products = store.getState().products;
-      console.table("shop 1,", this.activeProducts);
+    //  console.table("shop 1,", this.activeProducts);
     }); //store subscribe
     this.activeProducts = store.getState().products;
 
