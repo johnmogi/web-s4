@@ -33,7 +33,12 @@ export class ShopComponent implements OnInit {
       this.products = store.getState().products;
       this.getCart = store.getState().cartItems;
       this.cart = store.getState().cart;
-
+     
+      setTimeout(() => {
+      
+        console.table('cart:', this.cart);
+      }, 2000);
+      
       this.activeProducts = this.products;
       this.user = store.getState().user;
       // console.table('user?', this.user);
@@ -45,7 +50,8 @@ export class ShopComponent implements OnInit {
     this.products = store.getState().products;
     this.getCart = store.getState().cartItems;
     this.cart = store.getState().cart;
-    console.table('cart:', this.cart);
+
+
 
     this.activeProducts = this.products;
   }
@@ -59,6 +65,10 @@ export class ShopComponent implements OnInit {
       .addItemToCart(this.addItem, this.addItem.cartId)
       .subscribe((res) => console.log(res));
   }
+ 
+
+
+
 }
 
 // console.table("thisCart:", this.getCart)
